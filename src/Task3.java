@@ -4,7 +4,7 @@ class Node {
 
     public Node(int data) {
         this.data = data;
-        this.next = null; // In a circular list, this will be updated
+        this.next = null; // In a circular list, last node will point towards head
     }
 }
 
