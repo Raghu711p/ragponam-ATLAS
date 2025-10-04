@@ -1,0 +1,215 @@
+spring:
+  application:
+    name: student-evaluator-system
+  
+  # Database Configuration (H2 for quick setup)
+  datasource:
+    url: jdbc:h2:mem:student_evaluator;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+    h2:
+      console:
+        enabled: true
+        path: /h2-console
+    hikari:
+      maximum-pool-size: ${DB_MAX_POOL_SIZE:20}
+      minimum-idle: ${DB_MIN_IDLE:5}
+      connection-timeout: ${DB_CONNECTION_TIMEOUT:30000}
+      idle-timeout: ${DB_IDLE_TIMEOUT:600000}
+      max-lifetime: ${DB_MAX_LIFETIME:1800000}
+      leak-detection-threshold: ${DB_LEAK_DETECTION:60000}
+      pool-name: StudentEvaluatorPool
+      register-mbeans: true
+      auto-commit: true
+      validation-timeout: 5000
+      initialization-fail-timeout: 1
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        use_sql_comments: true
+    open-in-view: false
+  
+  # Web Configuration
+  servlet:
+    multipart:
+      max-file-size: ${MAX_FILE_SIZE:1MB}
+      max-request-size: ${MAX_REQUEST_SIZE:10MB}
+  
+  # Cache Configuration
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=30m,recordStats
+  
+  # Actuator Configuration
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: health,info,metrics,prometheus,httptrace,loggers,threaddump,heapdump
+        base-path: /actuator
+    endpoint:
+      health:
+        show-details: always
+        show-components: always
+      metrics:
+        enabled: true
+      prometheus:
+        enabled: true
+    metrics:
+      export:
+        prometheus:
+          enabled: true
+      distribution:
+        percentiles-histogram:
+          http.server.requests: true
+        percentiles:
+          http.server.requests: 0.5,0.95,0.99
+      tags:
+        application: ${spring.application.name}
+    health:
+      diskspace:
+        enabled: true
+      db:
+        enabled: true
+
+# AWS Configuration
+aws:
+  region: ${AWS_REGION:us-east-1}
+  dynamodb:
+    endpoint: ${DYNAMODB_ENDPOINT:}
+    table-name: ${DYNAMODB_TABLE:evaluation_logs}
+
+# Evaluation System Configuration
+evaluation:
+  # Timeout for compilation and test execution (in milliseconds)
+  timeout: ${EVALUATION_TIMEOUT:30000}
+  
+  # Maximum file size for uploads
+  max-file-size: ${MAX_FILE_SIZE:1048576}  # 1MB in bytes
+  
+  # Temporary directory for compilation and testing
+  temp-directory: ${TEMP_DIR:${java.io.tmpdir}/evaluations}
+  
+  # Maximum number of concurrent evaluations
+  max-concurrent-evaluations: ${MAX_CONCURRENT:5}
+  
+  # JUnit test execution settings
+  junit:
+    timeout: ${JUNIT_TIMEOUT:20000}  # 20 seconds
+    max-memory: ${JUNIT_MAX_MEMORY:512m}
+  
+  # Java compilation settings
+  compiler:
+    timeout: ${COMPILER_TIMEOUT:10000}  # 10 seconds
+    classpath: ${COMPILER_CLASSPATH:}
+
+# Logging Configuration
+logging:
+  level:
+    com.studentevaluator: ${LOG_LEVEL:INFO}
+    org.springframework.web: ${WEB_LOG_LEVEL:WARN}
+    org.hibernate: ${HIBERNATE_LOG_LEVEL:WARN}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: ${LOG_FILE:logs/student-evaluator.log}
+
+# CLI Configuration
+cli:
+  api:
+    base-url: ${CLI_API_BASE_URL:http://localhost:8080}
+
+# Security Configuration
+security:
+  rate-limit:
+    enabled: ${RATE_LIMIT_ENABLED:true}
+    requests-per-minute: ${RATE_LIMIT_REQUESTS:60}
+  file:
+    max-size: ${SECURITY_MAX_FILE_SIZE:1048576}  # 1MB
+    allowed-extensions: .java
+    scan-content: ${SECURITY_SCAN_CONTENT:true}
+
+# Server Configuration
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: always
+    include-binding-errors: always
+
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/student_evaluator_dev
+    username: dev_user
+    password: dev_password
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+aws:
+  dynamodb:
+    endpoint: http://localhost:8000
+
+evaluation:
+  temp-directory: ./temp/evaluations
+
+logging:
+  level:
+    com.studentevaluator: DEBUG
+
+---
+# Test Profile
+spring:
+  config:
+    activate:
+      on-profile: test
+  
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+
+aws:
+  dynamodb:
+    endpoint: http://localhost:8000
+
+evaluation:
+  timeout: 5000
+  temp-directory: ./target/test-temp
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    com.studentevaluator: WARN
+    root: WARN
+  file:
+    name: /var/log/student-evaluator/application.log

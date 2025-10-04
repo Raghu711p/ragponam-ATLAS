@@ -1,0 +1,143 @@
+@startuml Service Layer Detailed Class Diagram
+!theme plain
+skinparam classAttributeIconSize 0
+
+package "Service Layer" {
+    class EvaluationService {
+        -javaCompiler: JavaCompiler
+        -testRunner: JUnitTestRunner
+        -evaluationRepository: EvaluationRepository
+        -assignmentRepository: AssignmentRepository
+        -studentRepository: StudentRepository
+        -scoreCache: ScoreCache
+        -errorLogService: ErrorLogService
+        -taskExecutor: TaskExecutor
+        --
+        +evaluateAsync(request: EvaluationRequest): CompletableFuture<EvaluationResult>
+        +getEvaluationStatus(evaluationId: String): EvaluationResponse
+        +getEvaluationResults(evaluationId: String): EvaluationResult
+        +cancelEvaluation(evaluationId: String): boolean
+        +retryEvaluation(evaluationId: String): CompletableFuture<EvaluationResult>
+        --
+        -performEvaluation(request: EvaluationRequest): EvaluationResult
+        -compileStudentCode(sourceFile: File): CompilationResult
+        -runTestSuite(compiledClass: File, assignment: Assignment): TestExecutionResult
+        -calculateScore(testResult: TestExecutionResult): double
+        -saveEvaluation(evaluation: Evaluation): Evaluation
+        -updateCache(studentId: String, score: Double): void
+        -logEvaluationDetails(evaluationId: String, result: EvaluationResult): void
+        -handleEvaluationError(evaluationId: String, error: Exception): void
+        -cleanupTempFiles(evaluationId: String): void
+    }
+    
+    class AssignmentService {
+        -assignmentRepository: AssignmentRepository
+        -fileHandler: SecureFileHandler
+        -validator: InputValidator
+        --
+        +uploadAssignment(file: MultipartFile, request: AssignmentUploadRequest): Assignment
+        +uploadTestFiles(assignmentId: String, files: MultipartFile[]): Assignment
+        +getAssignment(assignmentId: String): Assignment
+        +listAssignments(pageable: Pageable): Page<Assignment>
+        +deleteAssignment(assignmentId: String): void
+        +updateAssignment(assignmentId: String, request: AssignmentUploadRequest): Assignment
+        --
+        -validateAssignmentFile(file: MultipartFile): ValidationResult
+        -validateTestFiles(files: MultipartFile[]): ValidationResult
+        -storeAssignmentFile(file: MultipartFile): String
+        -storeTestFiles(files: MultipartFile[], assignmentId: String): List<String>
+        -createAssignmentEntity(request: AssignmentUploadRequest, filePath: String): Assignment
+        -updateTestFilePaths(assignment: Assignment, testFilePaths: List<String>): Assignment
+    }
+    
+    class ScoreCache {
+        -studentScoreMap: Map<Integer, Double>
+        -cacheTimestamps: Map<String, LocalDateTime>
+        -cleanupExecutor: ScheduledExecutorService
+        -cacheExpirationMinutes: long
+        -cacheHits: AtomicLong
+        -cacheMisses: AtomicLong
+        --
+        +updateScore(studentId: String, score: Double): void
+        +getScore(studentId: String): Optional<Double>
+        +invalidateScore(studentId: String): void
+        +invalidateAllScores(): void
+        +getCacheSize(): int
+        +getCacheHitRate(): double
+        +cleanupExpiredEntries(): void
+        --
+        -calculateHashCode(studentId: String): int
+        -isExpired(studentId: String): boolean
+        -recordCacheHit(): void
+        -recordCacheMiss(): void
+    }
+    
+    class ErrorLogService {
+        -dynamoDBRepository: DynamoDBRepository
+        -objectMapper: ObjectMapper
+        --
+        +logEvaluation(evaluationId: String, result: EvaluationResult): void
+        +logError(evaluationId: String, error: Exception): void
+        +logCompilationError(evaluationId: String, compilationResult: CompilationResult): void
+        +logTestExecutionError(evaluationId: String, testResult: TestExecutionResult): void
+        +getEvaluationLogs(evaluationId: String): List<EvaluationLog>
+        +getErrorLogs(evaluationId: String): List<EvaluationLog>
+        --
+        -createEvaluationLog(evaluationId: String, level: LogLevel, message: String, details: Object): EvaluationLog
+        -formatStackTrace(exception: Exception): String
+    }
+}
+
+package "Engine Layer" {
+    class JavaCompiler {
+        -systemCompiler: JavaCompiler
+        -securityManager: SecurityManager
+        -tempDirectory: String
+        -compilationTimeoutMs: long
+        --
+        +compile(sourceFile: File, outputDirectory: String): CompilationResult
+        +compileWithTimeout(sourceFile: File, outputDirectory: String, timeoutMs: long): CompilationResult
+        +validateSyntax(sourceFile: File): ValidationResult
+        +getCompilerVersion(): String
+        --
+        -setupCompilationEnvironment(outputDirectory: String): void
+        -configureCompilerOptions(options: List<String>): void
+        -executeCompilation(sourceFile: File, outputDirectory: String): CompilationResult
+        -captureCompilationErrors(diagnostics: DiagnosticCollector<JavaFileObject>): List<String>
+        -setupSecurityManager(): void
+        -cleanupCompilationArtifacts(outputDirectory: String): void
+        -validateCompilerAccess(): boolean
+    }
+    
+    class JUnitTestRunner {
+        -testEngine: TestEngine
+        -executorService: ExecutorService
+        -testTimeoutMs: long
+        -maxConcurrentTests: int
+        --
+        +runTests(compiledClass: File, testFiles: List<File>): TestExecutionResult
+        +runTestsWithTimeout(compiledClass: File, testFiles: List<File>, timeoutMs: long): TestExecutionResult
+        +runSingleTest(compiledClass: File, testFile: File): TestCase
+        +validateTestFiles(testFiles: List<File>): ValidationResult
+        --
+        -loadTestClasses(testFiles: List<File>): List<Class<?>>
+        -createTestSuite(testClasses: List<Class<?>>): TestSuite
+        -executeTestSuite(testSuite: TestSuite): TestExecutionResult
+        -executeTestWithTimeout(test: Test, timeoutMs: long): TestCase
+        -captureTestResults(listener: TestExecutionListener): List<TestCase>
+        -handleTestTimeout(test: Test): TestCase
+        -setupTestClasspath(compiledClass: File, testFiles: List<File>): URLClassLoader
+        -cleanupTestEnvironment(classLoader: URLClassLoader): void
+    }
+}
+
+' Relationships
+EvaluationService --> JavaCompiler
+EvaluationService --> JUnitTestRunner
+EvaluationService --> ScoreCache
+EvaluationService --> ErrorLogService
+
+AssignmentService --> "InputValidator" : uses
+AssignmentService --> "SecureFileHandler" : uses
+
+@enduml

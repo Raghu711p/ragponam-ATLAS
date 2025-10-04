@@ -1,0 +1,56 @@
+@startuml Assignment Upload Sequence Diagram
+!theme plain
+skinparam sequenceMessageAlign center
+
+actor Client
+participant "EvaluationController" as EC
+participant "AssignmentService" as AS
+participant "InputValidator" as IV
+participant "SecureFileHandler" as SFH
+participant "AssignmentRepository" as AR
+
+Client -> EC: POST /assignments\n(file, title, description)
+activate EC
+
+EC -> IV: validateJavaFile(file)
+activate IV
+
+alt File is valid
+    IV --> EC: ValidationResult(valid=true)
+    deactivate IV
+    
+    EC -> AS: uploadAssignment(file, request)
+    activate AS
+    
+    AS -> IV: validateAssignmentFile(file)
+    activate IV
+    IV --> AS: ValidationResult(valid=true)
+    deactivate IV
+    
+    AS -> SFH: storeFile(file, "assignments/")
+    activate SFH
+    SFH --> AS: filePath
+    deactivate SFH
+    
+    AS -> AS: createAssignmentEntity(request, filePath)
+    
+    AS -> AR: save(assignment)
+    activate AR
+    AR --> AS: savedAssignment
+    deactivate AR
+    
+    AS --> EC: Assignment
+    deactivate AS
+    
+    EC -> EC: buildAssignmentResponse(assignment)
+    EC --> Client: HTTP 201 Created\nAssignmentResponse
+    
+else File is invalid
+    IV --> EC: ValidationResult(valid=false, errors)
+    deactivate IV
+    EC --> Client: HTTP 400 Bad Request\nErrorResponse
+end
+
+deactivate EC
+
+@enduml

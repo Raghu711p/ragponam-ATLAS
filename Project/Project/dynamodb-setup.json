@@ -1,0 +1,8 @@
+{
+  "evaluation_id": {"S": "EVAL001"},
+  "timestamp": {"S": "2024-01-15T10:30:00Z"},
+  "student_id": {"S": "STU001"},
+  "assignment_id": {"S": "ASG001"},
+  "action": {"S": "EVALUATION_STARTED"},
+  "details": {"S": "Student submitted Calculator.java for evaluation"}
+}

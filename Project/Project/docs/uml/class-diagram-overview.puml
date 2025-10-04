@@ -1,0 +1,232 @@
+@startuml Student Evaluator System - Class Overview
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam classFontSize 10
+skinparam packageStyle rectangle
+
+package "Controller Layer" {
+    class EvaluationController {
+        -evaluationService: EvaluationService
+        -inputValidator: InputValidator
+        +triggerEvaluation(request: EvaluationRequest): ResponseEntity
+        +getEvaluationStatus(id: String): ResponseEntity
+        +getEvaluationResults(id: String): ResponseEntity
+        +uploadAssignment(file: MultipartFile, request: AssignmentUploadRequest): ResponseEntity
+    }
+    
+    class StudentController {
+        -evaluationService: EvaluationService
+        -scoreCache: ScoreCache
+        +getStudentScores(studentId: String): ResponseEntity
+        +getStudentEvaluations(studentId: String): ResponseEntity
+    }
+    
+    class GlobalExceptionHandler {
+        +handleValidationException(ex: ValidationException): ResponseEntity
+        +handleCompilationException(ex: CompilationException): ResponseEntity
+        +handleGenericException(ex: Exception): ResponseEntity
+    }
+}
+
+package "Service Layer" {
+    class EvaluationService {
+        -javaCompiler: JavaCompiler
+        -testRunner: JUnitTestRunner
+        -evaluationRepository: EvaluationRepository
+        -scoreCache: ScoreCache
+        +evaluateAsync(request: EvaluationRequest): CompletableFuture
+        +getEvaluationStatus(id: String): EvaluationResponse
+        +calculateScore(testResult: TestExecutionResult): double
+        -performEvaluation(request: EvaluationRequest): EvaluationResult
+    }
+    
+    class AssignmentService {
+        -assignmentRepository: AssignmentRepository
+        -fileHandler: SecureFileHandler
+        +uploadAssignment(file: MultipartFile, request: AssignmentUploadRequest): Assignment
+        +uploadTestFiles(assignmentId: String, files: MultipartFile[]): Assignment
+        +getAssignment(id: String): Assignment
+    }
+    
+    class ScoreCache {
+        -studentScoreMap: Map<Integer, Double>
+        -cacheTimestamps: Map<String, LocalDateTime>
+        +updateScore(studentId: String, score: Double): void
+        +getScore(studentId: String): Optional<Double>
+        +cleanupExpiredEntries(): void
+    }
+}
+
+package "Engine Layer" {
+    class JavaCompiler {
+        -systemCompiler: JavaCompiler
+        -securityManager: SecurityManager
+        +compile(sourceFile: File, outputDir: String): CompilationResult
+        +validateSyntax(sourceFile: File): ValidationResult
+        -setupSecurityManager(): void
+        -cleanupTempFiles(outputDir: String): void
+    }
+    
+    class JUnitTestRunner {
+        -testEngine: TestEngine
+        -executorService: ExecutorService
+        +runTests(compiledClass: File, testFiles: List<File>): TestExecutionResult
+        +runTestsWithTimeout(compiledClass: File, testFiles: List<File>, timeout: long): TestExecutionResult
+        -loadTestClasses(testFiles: List<File>): List<Class>
+        -executeTestSuite(testClasses: List<Class>): TestExecutionResult
+    }
+}
+
+package "Repository Layer" {
+    interface StudentRepository {
+        +findById(id: String): Optional<Student>
+        +findByEmail(email: String): Optional<Student>
+        +save(student: Student): Student
+        +findAll(pageable: Pageable): Page<Student>
+    }
+    
+    interface AssignmentRepository {
+        +findById(id: String): Optional<Assignment>
+        +findByTitle(title: String): List<Assignment>
+        +save(assignment: Assignment): Assignment
+        +findAll(pageable: Pageable): Page<Assignment>
+    }
+    
+    interface EvaluationRepository {
+        +findById(id: String): Optional<Evaluation>
+        +findByStudentId(studentId: String): List<Evaluation>
+        +findByAssignmentId(assignmentId: String): List<Evaluation>
+        +save(evaluation: Evaluation): Evaluation
+        +findAverageScoreByAssignment(assignmentId: String): Double
+    }
+    
+    class DynamoDBRepository {
+        -dynamoDbClient: DynamoDbClient
+        -tableName: String
+        +storeEvaluationLog(evaluationId: String, log: EvaluationLog): void
+        +getEvaluationLogs(evaluationId: String): List<EvaluationLog>
+        +deleteEvaluationLogs(evaluationId: String): void
+    }
+}
+
+package "Model Layer" {
+    class Student {
+        -studentId: String
+        -name: String
+        -email: String
+        -createdAt: LocalDateTime
+        -evaluations: List<Evaluation>
+        +getId(): String
+        +getName(): String
+        +getEvaluations(): List<Evaluation>
+    }
+    
+    class Assignment {
+        -assignmentId: String
+        -title: String
+        -description: String
+        -testFilePath: String
+        -createdAt: LocalDateTime
+        -evaluations: List<Evaluation>
+        +getId(): String
+        +getTitle(): String
+        +getTestFilePath(): String
+    }
+    
+    class Evaluation {
+        -evaluationId: String
+        -studentId: String
+        -assignmentId: String
+        -score: BigDecimal
+        -maxScore: BigDecimal
+        -status: EvaluationStatus
+        -evaluatedAt: LocalDateTime
+        +getId(): String
+        +getScore(): BigDecimal
+        +isCompleted(): boolean
+    }
+    
+    class CompilationResult {
+        -successful: boolean
+        -output: String
+        -errors: List<String>
+        -compiledClassPath: String
+        +isSuccessful(): boolean
+        +getErrors(): List<String>
+        +hasErrors(): boolean
+    }
+    
+    class TestExecutionResult {
+        -totalTests: int
+        -passedTests: int
+        -failedTests: int
+        -testCases: List<TestCase>
+        -executionLog: String
+        +getSuccessRate(): double
+        +getTestCases(): List<TestCase>
+    }
+    
+    class TestCase {
+        -testName: String
+        -className: String
+        -status: TestStatus
+        -executionTime: long
+        -errorMessage: String
+        -stackTrace: String
+        +isPassed(): boolean
+        +getExecutionTime(): long
+    }
+}
+
+package "Security Layer" {
+    class InputValidator {
+        -allowedExtensions: Set<String>
+        -maxFileSize: long
+        +validateJavaFile(file: MultipartFile): ValidationResult
+        +validateFileSize(file: MultipartFile): ValidationResult
+        +scanForMaliciousContent(content: String): ValidationResult
+    }
+    
+    class SecureFileHandler {
+        -baseDirectory: String
+        -tempDirectory: String
+        +storeFile(file: MultipartFile, directory: String): String
+        +deleteFile(filePath: String): boolean
+        +createSecureDirectory(path: String): String
+        -preventPathTraversal(filePath: String): String
+    }
+    
+    class RateLimitingFilter {
+        -rateLimitMap: Map<String, RateLimitInfo>
+        -requestsPerMinute: int
+        +doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain): void
+        +isRateLimited(clientId: String): boolean
+    }
+}
+
+' Relationships
+EvaluationController --> EvaluationService
+EvaluationController --> InputValidator
+StudentController --> EvaluationService
+StudentController --> ScoreCache
+
+EvaluationService --> JavaCompiler
+EvaluationService --> JUnitTestRunner
+EvaluationService --> EvaluationRepository
+EvaluationService --> ScoreCache
+
+AssignmentService --> AssignmentRepository
+AssignmentService --> SecureFileHandler
+
+JavaCompiler --> CompilationResult
+JUnitTestRunner --> TestExecutionResult
+TestExecutionResult --> TestCase
+
+Student ||--o{ Evaluation
+Assignment ||--o{ Evaluation
+
+StudentRepository --> Student
+AssignmentRepository --> Assignment
+EvaluationRepository --> Evaluation
+
+@enduml

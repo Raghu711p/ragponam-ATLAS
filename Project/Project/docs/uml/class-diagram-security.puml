@@ -1,0 +1,215 @@
+@startuml Security Layer Class Diagram
+!theme plain
+skinparam classAttributeIconSize 0
+
+package "Security Components" {
+    class InputValidator {
+        -allowedExtensions: Set<String>
+        -maxFileSize: long
+        -maliciousPatterns: List<String>
+        -virusScanner: VirusScanner
+        --
+        +InputValidator()
+        +InputValidator(allowedExtensions: Set<String>, maxFileSize: long)
+        --
+        +validateJavaFile(file: MultipartFile): ValidationResult
+        +validateTestFile(file: MultipartFile): ValidationResult
+        +validateFileName(fileName: String): ValidationResult
+        +validateFileSize(file: MultipartFile): ValidationResult
+        +validateFileContent(file: MultipartFile): ValidationResult
+        +scanForMaliciousContent(content: String): ValidationResult
+        +validateFileExtension(fileName: String): ValidationResult
+        --
+        -checkFileExtension(fileName: String): boolean
+        -checkFileSize(fileSize: long): boolean
+        -scanContentForPatterns(content: String): List<String>
+        -isJavaSourceFile(file: MultipartFile): boolean
+        -containsMaliciousCode(content: String): boolean
+        -scanForViruses(file: MultipartFile): boolean
+    }
+    
+    class SecureFileHandler {
+        -baseDirectory: String
+        -tempDirectory: String
+        -fileSystem: FileSystem
+        -securityManager: SecurityManager
+        -maxDirectoryDepth: int
+        --
+        +SecureFileHandler(baseDirectory: String, tempDirectory: String)
+        --
+        +storeFile(file: MultipartFile, directory: String): String
+        +storeTemporaryFile(file: MultipartFile): String
+        +readFile(filePath: String): String
+        +deleteFile(filePath: String): boolean
+        +moveFile(sourcePath: String, destinationPath: String): boolean
+        +createSecureDirectory(directoryPath: String): String
+        +listFiles(directoryPath: String): List<String>
+        +getFileSize(filePath: String): long
+        +getFileLastModified(filePath: String): LocalDateTime
+        --
+        -validateFilePath(filePath: String): boolean
+        -preventPathTraversal(filePath: String): String
+        -setSecurePermissions(file: File): void
+        -generateSecureFileName(originalName: String): String
+        -cleanupTempFiles(directory: String): void
+        -ensureDirectoryExists(directoryPath: String): void
+        -isWithinAllowedDirectory(filePath: String): boolean
+    }
+    
+    class RateLimitingFilter {
+        -rateLimitMap: Map<String, RateLimitInfo>
+        -requestsPerMinute: int
+        -windowSizeMs: long
+        -cleanupIntervalMs: long
+        -lastCleanup: AtomicLong
+        --
+        +RateLimitingFilter(requestsPerMinute: int)
+        --
+        +doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain): void
+        +isRateLimited(clientId: String): boolean
+        +resetRateLimit(clientId: String): void
+        +getCurrentRequestCount(clientId: String): int
+        +getRemainingRequests(clientId: String): int
+        --
+        -extractClientId(request: HttpServletRequest): String
+        -updateRequestCount(clientId: String): void
+        -isWithinRateLimit(clientId: String): boolean
+        -cleanupExpiredEntries(): void
+        -sendRateLimitResponse(response: HttpServletResponse): void
+        -getClientIP(request: HttpServletRequest): String
+    }
+    
+    class RateLimitInfo {
+        -requestCount: AtomicInteger
+        -windowStart: long
+        -lastRequest: long
+        --
+        +RateLimitInfo()
+        +RateLimitInfo(windowStart: long)
+        --
+        +getRequestCount(): int
+        +incrementRequestCount(): int
+        +getWindowStart(): long
+        +setWindowStart(windowStart: long): void
+        +getLastRequest(): long
+        +setLastRequest(lastRequest: long): void
+        +isExpired(windowSizeMs: long): boolean
+        +reset(): void
+    }
+    
+    class SecurityConfig {
+        -corsAllowedOrigins: String
+        -rateLimitEnabled: boolean
+        -jwtSecret: String
+        -sessionTimeout: int
+        --
+        +SecurityConfig()
+        --
+        +filterChain(http: HttpSecurity): SecurityFilterChain
+        +corsConfigurationSource(): CorsConfigurationSource
+        +passwordEncoder(): PasswordEncoder
+        +authenticationManager(config: AuthenticationConfiguration): AuthenticationManager
+        +jwtDecoder(): JwtDecoder
+        +sessionRegistry(): SessionRegistry
+        --
+        -configureHttpSecurity(http: HttpSecurity): void
+        -configureCors(configuration: CorsConfiguration): void
+        -configureSessionManagement(http: HttpSecurity): void
+        -configureJwtAuthentication(http: HttpSecurity): void
+    }
+}
+
+package "Validation Models" {
+    class ValidationResult {
+        -valid: boolean
+        -errors: List<String>
+        -warnings: List<String>
+        -validatedObject: Object
+        --
+        +ValidationResult(valid: boolean)
+        +ValidationResult(valid: boolean, errors: List<String>)
+        --
+        +isValid(): boolean
+        +setValid(valid: boolean): void
+        +getErrors(): List<String>
+        +setErrors(errors: List<String>): void
+        +getWarnings(): List<String>
+        +setWarnings(warnings: List<String>): void
+        +getValidatedObject(): Object
+        +setValidatedObject(validatedObject: Object): void
+        +hasErrors(): boolean
+        +hasWarnings(): boolean
+        +addError(error: String): void
+        +addWarning(warning: String): void
+        +getErrorMessage(): String
+    }
+    
+    enum SecurityThreatType {
+        MALICIOUS_CODE
+        PATH_TRAVERSAL
+        OVERSIZED_FILE
+        INVALID_EXTENSION
+        VIRUS_DETECTED
+        RATE_LIMIT_EXCEEDED
+        --
+        +getDescription(): String
+        +getSeverity(): ThreatSeverity
+    }
+    
+    enum ThreatSeverity {
+        LOW
+        MEDIUM
+        HIGH
+        CRITICAL
+        --
+        +getLevel(): int
+        +toString(): String
+    }
+}
+
+package "Exception Classes" {
+    class ValidationException {
+        -fieldName: String
+        -rejectedValue: Object
+        -validationErrors: List<String>
+        -threatType: SecurityThreatType
+        --
+        +ValidationException(message: String)
+        +ValidationException(fieldName: String, message: String)
+        +ValidationException(fieldName: String, rejectedValue: Object, message: String)
+        +ValidationException(threatType: SecurityThreatType, message: String)
+        --
+        +getFieldName(): String
+        +getRejectedValue(): Object
+        +getValidationErrors(): List<String>
+        +getThreatType(): SecurityThreatType
+    }
+    
+    class SecurityException {
+        -threatType: SecurityThreatType
+        -clientId: String
+        -requestDetails: Map<String, Object>
+        --
+        +SecurityException(message: String)
+        +SecurityException(threatType: SecurityThreatType, message: String)
+        +SecurityException(threatType: SecurityThreatType, clientId: String, message: String)
+        --
+        +getThreatType(): SecurityThreatType
+        +getClientId(): String
+        +getRequestDetails(): Map<String, Object>
+        +addRequestDetail(key: String, value: Object): void
+    }
+}
+
+' Relationships
+InputValidator --> ValidationResult : "produces"
+SecureFileHandler --> ValidationResult : "produces"
+RateLimitingFilter --> RateLimitInfo : "uses"
+
+ValidationResult --> SecurityThreatType : "may contain"
+SecurityThreatType --> ThreatSeverity : "has"
+
+ValidationException --> SecurityThreatType : "contains"
+SecurityException --> SecurityThreatType : "contains"
+
+@enduml

@@ -1,0 +1,103 @@
+# Student Evaluator System - Deployment Configuration
+# This file contains configuration for local deployment without containerization
+
+deployment:
+  name: "student-evaluator-system"
+  version: "1.0.0"
+  environment: "local"
+  
+  # Application settings
+  application:
+    jar-name: "student-evaluator-system-1.0.0.jar"
+    main-class: "com.studentevaluator.StudentEvaluatorApplication"
+    jvm-options:
+      - "-Xms512m"
+      - "-Xmx1024m"
+      - "-Dspring.profiles.active=local"
+      - "-Dfile.encoding=UTF-8"
+      - "-Djava.awt.headless=true"
+    
+  # Server configuration
+  server:
+    port: 8080
+    context-path: "/"
+    shutdown-timeout: 30
+    
+  # Storage configuration
+  storage:
+    base-directory: "data"
+    subdirectories:
+      - "assignments"
+      - "submissions" 
+      - "test-files"
+      - "logs"
+      - "temp"
+    permissions: "755"
+    
+  # Database configuration
+  database:
+    type: "h2"
+    file-path: "data/studentevaluator"
+    console-enabled: true
+    console-path: "/h2-console"
+    connection-pool:
+      initial-size: 5
+      max-size: 20
+      
+  # Logging configuration
+  logging:
+    level: "INFO"
+    file: "logs/application.log"
+    max-file-size: "10MB"
+    max-files: 5
+    pattern: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    
+  # Security settings
+  security:
+    max-file-size: 1048576  # 1MB
+    allowed-extensions: [".java"]
+    upload-timeout: 30
+    evaluation-timeout: 60
+    
+  # Performance settings
+  performance:
+    max-concurrent-evaluations: 5
+    thread-pool-size: 10
+    cache-size: 1000
+    
+  # Monitoring
+  monitoring:
+    health-check-enabled: true
+    metrics-enabled: true
+    endpoints:
+      - "/actuator/health"
+      - "/actuator/info"
+      - "/actuator/metrics"
+      
+  # Backup settings
+  backup:
+    enabled: true
+    directory: "backups"
+    retention-days: 30
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    
+# Environment-specific overrides
+environments:
+  local:
+    database:
+      console-enabled: true
+    logging:
+      level: "DEBUG"
+    security:
+      strict-mode: false
+      
+  production:
+    database:
+      console-enabled: false
+    logging:
+      level: "WARN"
+    security:
+      strict-mode: true
+    jvm-options:
+      - "-Xms1024m"
+      - "-Xmx2048m"

@@ -1,0 +1,570 @@
+openapi: 3.0.3
+info:
+  title: Student Evaluator System API
+  description: |
+    The Student Evaluator System provides automated evaluation of Java programming assignments through JUnit testing.
+    This API allows you to upload assignments, manage test cases, trigger evaluations, and retrieve results.
+  version: 1.0.0
+  contact:
+    name: Student Evaluator System
+    email: support@studentevaluator.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local development server
+  - url: https://api.studentevaluator.com/v1
+    description: Production server
+
+paths:
+  /assignments:
+    post:
+      summary: Upload assignment file
+      description: Upload a Java assignment file to the system for evaluation setup
+      operationId: uploadAssignment
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Java source file (.java)
+                title:
+                  type: string
+                  description: Assignment title
+                  example: "Calculator Assignment"
+                description:
+                  type: string
+                  description: Assignment description
+                  example: "Implement basic calculator operations"
+              required:
+                - file
+                - title
+      responses:
+        '201':
+          description: Assignment uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentResponse'
+        '400':
+          description: Invalid request or file format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: File too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - Assignments
+
+    get:
+      summary: List all assignments
+      description: Retrieve a list of all assignments in the system
+      operationId: listAssignments
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: List of assignments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssignmentResponse'
+      tags:
+        - Assignments
+
+  /assignments/{assignmentId}/tests:
+    post:
+      summary: Upload test files for assignment
+      description: Upload JUnit test files to be associated with a specific assignment
+      operationId: uploadTestFiles
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          description: Assignment identifier
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: JUnit test files (.java)
+              required:
+                - files
+      responses:
+        '200':
+          description: Test files uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentResponse'
+        '400':
+          description: Invalid test files or assignment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Assignment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - Assignments
+
+  /evaluations:
+    post:
+      summary: Trigger evaluation
+      description: Start evaluation process for a student's assignment submission
+      operationId: triggerEvaluation
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Student's Java submission file
+                studentId:
+                  type: string
+                  description: Student identifier
+                  example: "student123"
+                assignmentId:
+                  type: string
+                  description: Assignment identifier
+                  example: "calc-assignment-1"
+              required:
+                - file
+                - studentId
+                - assignmentId
+      responses:
+        '202':
+          description: Evaluation started successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResponse'
+        '400':
+          description: Invalid request or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Assignment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - Evaluations
+
+  /evaluations/{evaluationId}:
+    get:
+      summary: Get evaluation status
+      description: Retrieve the current status of an evaluation
+      operationId: getEvaluationStatus
+      parameters:
+        - name: evaluationId
+          in: path
+          required: true
+          description: Evaluation identifier
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Evaluation status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResponse'
+        '404':
+          description: Evaluation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - Evaluations
+
+  /evaluations/{evaluationId}/results:
+    get:
+      summary: Get detailed evaluation results
+      description: Retrieve detailed results including compilation output, test results, and scores
+      operationId: getEvaluationResults
+      parameters:
+        - name: evaluationId
+          in: path
+          required: true
+          description: Evaluation identifier
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detailed evaluation results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResultResponse'
+        '404':
+          description: Evaluation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Evaluation not completed yet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - Evaluations
+
+  /students/{studentId}/scores:
+    get:
+      summary: Get student scores
+      description: Retrieve all scores for a specific student
+      operationId: getStudentScores
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          description: Student identifier
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Student scores retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentScoreResponse'
+        '404':
+          description: Student not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - Students
+
+  /students/{studentId}/evaluations:
+    get:
+      summary: Get student evaluation history
+      description: Retrieve evaluation history for a specific student
+      operationId: getStudentEvaluations
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          description: Student identifier
+          schema:
+            type: string
+        - name: assignmentId
+          in: query
+          description: Filter by assignment ID
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter by evaluation status
+          schema:
+            type: string
+            enum: [PENDING, COMPLETED, FAILED]
+      responses:
+        '200':
+          description: Student evaluation history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EvaluationResponse'
+        '404':
+          description: Student not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - Students
+
+components:
+  schemas:
+    AssignmentResponse:
+      type: object
+      properties:
+        assignmentId:
+          type: string
+          description: Unique assignment identifier
+          example: "calc-assignment-1"
+        title:
+          type: string
+          description: Assignment title
+          example: "Calculator Assignment"
+        description:
+          type: string
+          description: Assignment description
+          example: "Implement basic calculator operations"
+        createdAt:
+          type: string
+          format: date-time
+          description: Assignment creation timestamp
+        testFilePath:
+          type: string
+          description: Path to associated test files
+          example: "/tests/calc-assignment-1/"
+      required:
+        - assignmentId
+        - title
+        - createdAt
+
+    EvaluationResponse:
+      type: object
+      properties:
+        evaluationId:
+          type: string
+          description: Unique evaluation identifier
+          example: "eval-123-456"
+        studentId:
+          type: string
+          description: Student identifier
+          example: "student123"
+        assignmentId:
+          type: string
+          description: Assignment identifier
+          example: "calc-assignment-1"
+        status:
+          type: string
+          enum: [PENDING, COMPLETED, FAILED]
+          description: Current evaluation status
+        score:
+          type: number
+          format: double
+          description: Evaluation score
+          example: 85.5
+        maxScore:
+          type: number
+          format: double
+          description: Maximum possible score
+          example: 100.0
+        evaluatedAt:
+          type: string
+          format: date-time
+          description: Evaluation completion timestamp
+      required:
+        - evaluationId
+        - studentId
+        - assignmentId
+        - status
+
+    EvaluationResultResponse:
+      type: object
+      properties:
+        evaluationId:
+          type: string
+          description: Unique evaluation identifier
+        compilationResult:
+          $ref: '#/components/schemas/CompilationResult'
+        testResult:
+          $ref: '#/components/schemas/TestExecutionResult'
+        finalScore:
+          type: number
+          format: double
+          description: Final calculated score
+        status:
+          type: string
+          enum: [PENDING, COMPLETED, FAILED]
+        evaluatedAt:
+          type: string
+          format: date-time
+      required:
+        - evaluationId
+        - status
+
+    CompilationResult:
+      type: object
+      properties:
+        successful:
+          type: boolean
+          description: Whether compilation was successful
+        output:
+          type: string
+          description: Compilation output messages
+        errors:
+          type: array
+          items:
+            type: string
+          description: Compilation error messages
+        compiledClassPath:
+          type: string
+          description: Path to compiled class file
+      required:
+        - successful
+
+    TestExecutionResult:
+      type: object
+      properties:
+        totalTests:
+          type: integer
+          description: Total number of tests executed
+        passedTests:
+          type: integer
+          description: Number of tests that passed
+        failedTests:
+          type: integer
+          description: Number of tests that failed
+        testCases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+        executionLog:
+          type: string
+          description: Detailed test execution log
+      required:
+        - totalTests
+        - passedTests
+        - failedTests
+
+    TestCase:
+      type: object
+      properties:
+        testName:
+          type: string
+          description: Name of the test method
+        className:
+          type: string
+          description: Test class name
+        status:
+          type: string
+          enum: [PASSED, FAILED, SKIPPED]
+        executionTime:
+          type: integer
+          format: int64
+          description: Test execution time in milliseconds
+        errorMessage:
+          type: string
+          description: Error message if test failed
+        stackTrace:
+          type: string
+          description: Stack trace if test failed
+      required:
+        - testName
+        - className
+        - status
+
+    StudentScoreResponse:
+      type: object
+      properties:
+        studentId:
+          type: string
+          description: Student identifier
+        name:
+          type: string
+          description: Student name
+        scores:
+          type: array
+          items:
+            type: object
+            properties:
+              assignmentId:
+                type: string
+              assignmentTitle:
+                type: string
+              score:
+                type: number
+                format: double
+              maxScore:
+                type: number
+                format: double
+              evaluatedAt:
+                type: string
+                format: date-time
+        averageScore:
+          type: number
+          format: double
+          description: Average score across all assignments
+      required:
+        - studentId
+        - scores
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code
+              example: "COMPILATION_FAILED"
+            message:
+              type: string
+              description: Human-readable error message
+              example: "Java compilation failed"
+            details:
+              type: object
+              description: Additional error details
+            timestamp:
+              type: string
+              format: date-time
+              description: Error timestamp
+          required:
+            - code
+            - message
+            - timestamp
+      required:
+        - error
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication (future enhancement)
+
+tags:
+  - name: Assignments
+    description: Assignment management operations
+  - name: Evaluations
+    description: Evaluation process operations
+  - name: Students
+    description: Student data and results operations

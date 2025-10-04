@@ -1,0 +1,243 @@
+@startuml Model Layer Class Diagram
+!theme plain
+skinparam classAttributeIconSize 0
+
+package "Domain Models" {
+    class Student {
+        -studentId: String {id}
+        -name: String
+        -email: String
+        -createdAt: LocalDateTime
+        -evaluations: List<Evaluation>
+        --
+        +Student()
+        +Student(studentId: String, name: String, email: String)
+        --
+        +getId(): String
+        +setId(id: String): void
+        +getName(): String
+        +setName(name: String): void
+        +getEmail(): String
+        +setEmail(email: String): void
+        +getCreatedAt(): LocalDateTime
+        +setCreatedAt(createdAt: LocalDateTime): void
+        +getEvaluations(): List<Evaluation>
+        +setEvaluations(evaluations: List<Evaluation>): void
+        +addEvaluation(evaluation: Evaluation): void
+        +removeEvaluation(evaluation: Evaluation): void
+    }
+    
+    class Assignment {
+        -assignmentId: String {id}
+        -title: String
+        -description: String
+        -testFilePath: String
+        -createdAt: LocalDateTime
+        -evaluations: List<Evaluation>
+        --
+        +Assignment()
+        +Assignment(assignmentId: String, title: String, description: String)
+        --
+        +getId(): String
+        +setId(id: String): void
+        +getTitle(): String
+        +setTitle(title: String): void
+        +getDescription(): String
+        +setDescription(description: String): void
+        +getTestFilePath(): String
+        +setTestFilePath(testFilePath: String): void
+        +getCreatedAt(): LocalDateTime
+        +setCreatedAt(createdAt: LocalDateTime): void
+        +getEvaluations(): List<Evaluation>
+        +setEvaluations(evaluations: List<Evaluation>): void
+        +hasTestFiles(): boolean
+    }
+    
+    class Evaluation {
+        -evaluationId: String {id}
+        -studentId: String
+        -assignmentId: String
+        -score: BigDecimal
+        -maxScore: BigDecimal
+        -status: EvaluationStatus
+        -evaluatedAt: LocalDateTime
+        --
+        +Evaluation()
+        +Evaluation(evaluationId: String, studentId: String, assignmentId: String)
+        --
+        +getId(): String
+        +setId(id: String): void
+        +getStudentId(): String
+        +setStudentId(studentId: String): void
+        +getAssignmentId(): String
+        +setAssignmentId(assignmentId: String): void
+        +getScore(): BigDecimal
+        +setScore(score: BigDecimal): void
+        +getMaxScore(): BigDecimal
+        +setMaxScore(maxScore: BigDecimal): void
+        +getStatus(): EvaluationStatus
+        +setStatus(status: EvaluationStatus): void
+        +getEvaluatedAt(): LocalDateTime
+        +setEvaluatedAt(evaluatedAt: LocalDateTime): void
+        +isCompleted(): boolean
+        +isFailed(): boolean
+        +isPending(): boolean
+        +getScorePercentage(): double
+    }
+    
+    enum EvaluationStatus {
+        PENDING
+        COMPLETED
+        FAILED
+        CANCELLED
+        --
+        +toString(): String
+        +isTerminal(): boolean
+    }
+}
+
+package "Result Models" {
+    class CompilationResult {
+        -successful: boolean
+        -output: String
+        -errors: List<String>
+        -compiledClassPath: String
+        -compilationTimeMs: long
+        --
+        +CompilationResult(successful: boolean)
+        +CompilationResult(successful: boolean, output: String, errors: List<String>)
+        --
+        +isSuccessful(): boolean
+        +setSuccessful(successful: boolean): void
+        +getOutput(): String
+        +setOutput(output: String): void
+        +getErrors(): List<String>
+        +setErrors(errors: List<String>): void
+        +getCompiledClassPath(): String
+        +setCompiledClassPath(compiledClassPath: String): void
+        +getCompilationTimeMs(): long
+        +setCompilationTimeMs(compilationTimeMs: long): void
+        +hasErrors(): boolean
+        +addError(error: String): void
+    }
+    
+    class TestExecutionResult {
+        -totalTests: int
+        -passedTests: int
+        -failedTests: int
+        -skippedTests: int
+        -testCases: List<TestCase>
+        -executionLog: String
+        -executionTimeMs: long
+        --
+        +TestExecutionResult()
+        +TestExecutionResult(totalTests: int, passedTests: int, failedTests: int)
+        --
+        +getTotalTests(): int
+        +setTotalTests(totalTests: int): void
+        +getPassedTests(): int
+        +setPassedTests(passedTests: int): void
+        +getFailedTests(): int
+        +setFailedTests(failedTests: int): void
+        +getSkippedTests(): int
+        +setSkippedTests(skippedTests: int): void
+        +getTestCases(): List<TestCase>
+        +setTestCases(testCases: List<TestCase>): void
+        +getExecutionLog(): String
+        +setExecutionLog(executionLog: String): void
+        +getExecutionTimeMs(): long
+        +setExecutionTimeMs(executionTimeMs: long): void
+        +getSuccessRate(): double
+        +hasFailures(): boolean
+        +addTestCase(testCase: TestCase): void
+    }
+    
+    class TestCase {
+        -testName: String
+        -className: String
+        -status: TestStatus
+        -executionTime: long
+        -errorMessage: String
+        -stackTrace: String
+        -assertions: int
+        --
+        +TestCase(testName: String, className: String)
+        +TestCase(testName: String, className: String, status: TestStatus)
+        --
+        +getTestName(): String
+        +setTestName(testName: String): void
+        +getClassName(): String
+        +setClassName(className: String): void
+        +getStatus(): TestStatus
+        +setStatus(status: TestStatus): void
+        +getExecutionTime(): long
+        +setExecutionTime(executionTime: long): void
+        +getErrorMessage(): String
+        +setErrorMessage(errorMessage: String): void
+        +getStackTrace(): String
+        +setStackTrace(stackTrace: String): void
+        +getAssertions(): int
+        +setAssertions(assertions: int): void
+        +isPassed(): boolean
+        +isFailed(): boolean
+        +isSkipped(): boolean
+        +getFullTestName(): String
+    }
+    
+    enum TestStatus {
+        PASSED
+        FAILED
+        SKIPPED
+        ABORTED
+        --
+        +toString(): String
+        +isSuccessful(): boolean
+    }
+    
+    class EvaluationResult {
+        -evaluationId: String
+        -compilationResult: CompilationResult
+        -testResult: TestExecutionResult
+        -finalScore: double
+        -maxScore: double
+        -status: EvaluationStatus
+        -startTime: LocalDateTime
+        -endTime: LocalDateTime
+        --
+        +EvaluationResult(evaluationId: String)
+        --
+        +getEvaluationId(): String
+        +setEvaluationId(evaluationId: String): void
+        +getCompilationResult(): CompilationResult
+        +setCompilationResult(compilationResult: CompilationResult): void
+        +getTestResult(): TestExecutionResult
+        +setTestResult(testResult: TestExecutionResult): void
+        +getFinalScore(): double
+        +setFinalScore(finalScore: double): void
+        +getMaxScore(): double
+        +setMaxScore(maxScore: double): void
+        +getStatus(): EvaluationStatus
+        +setStatus(status: EvaluationStatus): void
+        +getStartTime(): LocalDateTime
+        +setStartTime(startTime: LocalDateTime): void
+        +getEndTime(): LocalDateTime
+        +setEndTime(endTime: LocalDateTime): void
+        +getScorePercentage(): double
+        +getTotalExecutionTime(): Duration
+        +isSuccessful(): boolean
+    }
+}
+
+' Relationships
+Student ||--o{ Evaluation : "has many"
+Assignment ||--o{ Evaluation : "evaluated by"
+Evaluation --> EvaluationStatus : "has status"
+
+EvaluationResult --> CompilationResult : "contains"
+EvaluationResult --> TestExecutionResult : "contains"
+EvaluationResult --> EvaluationStatus : "has status"
+
+TestExecutionResult --> TestCase : "contains many"
+TestCase --> TestStatus : "has status"
+
+@enduml

@@ -1,0 +1,94 @@
+@startuml Evaluation Flow Sequence Diagram
+!theme plain
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 150
+
+actor Client
+participant "EvaluationController" as EC
+participant "InputValidator" as IV
+participant "SecureFileHandler" as SFH
+participant "EvaluationService" as ES
+participant "JavaCompiler" as JC
+participant "JUnitTestRunner" as JTR
+participant "EvaluationRepository" as ER
+participant "ScoreCache" as SC
+participant "ErrorLogService" as ELS
+
+Client -> EC: POST /evaluations\n(file, studentId, assignmentId)
+activate EC
+
+EC -> IV: validateFile(file)
+activate IV
+IV --> EC: ValidationResult
+deactivate IV
+
+alt File is valid
+    EC -> SFH: storeTemporaryFile(file)
+    activate SFH
+    SFH --> EC: tempFilePath
+    deactivate SFH
+    
+    EC -> ES: evaluateAsync(request)
+    activate ES
+    
+    note over ES: Async evaluation starts
+    ES -> ES: performEvaluation(request)
+    
+    ES -> JC: compile(sourceFile, outputDir)
+    activate JC
+    
+    alt Compilation successful
+        JC --> ES: CompilationResult(successful=true)
+        deactivate JC
+        
+        ES -> JTR: runTests(compiledClass, testFiles)
+        activate JTR
+        JTR --> ES: TestExecutionResult
+        deactivate JTR
+        
+        ES -> ES: calculateScore(testResult)
+        
+        ES -> ER: save(evaluation)
+        activate ER
+        ER --> ES: savedEvaluation
+        deactivate ER
+        
+        ES -> SC: updateScore(studentId, score)
+        activate SC
+        SC --> ES: void
+        deactivate SC
+        
+        ES -> ELS: logEvaluation(evaluationId, details)
+        activate ELS
+        ELS --> ES: void
+        deactivate ELS
+        
+        ES --> EC: EvaluationResponse(success)
+        
+    else Compilation failed
+        JC --> ES: CompilationResult(successful=false, errors)
+        deactivate JC
+        
+        ES -> ER: save(failedEvaluation)
+        activate ER
+        ER --> ES: savedEvaluation
+        deactivate ER
+        
+        ES -> ELS: logError(evaluationId, compilationErrors)
+        activate ELS
+        ELS --> ES: void
+        deactivate ELS
+        
+        ES --> EC: EvaluationResponse(compilation_failed)
+    end
+    
+    deactivate ES
+    EC --> Client: HTTP 202 Accepted\nEvaluationResponse
+    
+else File is invalid
+    EC --> Client: HTTP 400 Bad Request\nErrorResponse
+end
+
+deactivate EC
+
+@enduml

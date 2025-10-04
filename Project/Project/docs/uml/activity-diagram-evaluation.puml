@@ -1,0 +1,55 @@
+@startuml Evaluation Process Activity Diagram
+!theme plain
+skinparam activityFontSize 10
+
+start
+
+:Receive evaluation request;
+:Validate input file;
+
+if (File valid?) then (yes)
+    :Store file temporarily;
+    :Create evaluation record;
+    :Start async evaluation;
+    
+    fork
+        :Compile Java source code;
+        
+        if (Compilation successful?) then (yes)
+            :Load test files;
+            :Set up test environment;
+            :Execute JUnit tests;
+            
+            if (Tests completed?) then (yes)
+                :Collect test results;
+                :Calculate score;
+                :Update evaluation status to COMPLETED;
+            else (timeout/error)
+                :Update evaluation status to FAILED;
+                :Log test execution error;
+            endif
+            
+        else (no)
+            :Capture compilation errors;
+            :Update evaluation status to FAILED;
+            :Log compilation error;
+        endif
+        
+        :Clean up temporary files;
+        
+    fork again
+        :Update score cache;
+        :Store detailed logs in DynamoDB;
+        :Record performance metrics;
+        
+    end fork
+    
+    :Return evaluation response;
+    
+else (no)
+    :Return validation error;
+endif
+
+stop
+
+@enduml

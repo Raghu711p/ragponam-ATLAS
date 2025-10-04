@@ -1,0 +1,84 @@
+@startuml CLI Interaction Sequence Diagram
+!theme plain
+skinparam sequenceMessageAlign center
+
+actor User
+participant "EvaluatorCLI" as CLI
+participant "SubmitCommand" as SC
+participant "CLIApiService" as API
+participant "REST API Server" as Server
+
+User -> CLI: java -jar cli.jar submit\n--student john --assignment calc-1\nCalculator.java
+activate CLI
+
+CLI -> CLI: parseArguments(args)
+CLI -> CLI: validateArguments(cmd)
+
+CLI -> SC: execute(cmd)
+activate SC
+
+SC -> SC: validateSubmissionArgs(cmd)
+
+SC -> API: submitEvaluation(file, studentId, assignmentId)
+activate API
+
+API -> API: buildRequest("/evaluations", POST)
+API -> Server: HTTP POST /api/v1/evaluations\n(multipart form data)
+activate Server
+
+Server --> API: HTTP 202 Accepted\nEvaluationResponse
+deactivate Server
+
+API --> SC: EvaluationResponse
+deactivate API
+
+alt Wait flag is set
+    SC -> SC: waitForCompletion(evaluationId, true)
+    
+    loop Until completed or timeout
+        SC -> API: getEvaluationStatus(evaluationId)
+        activate API
+        
+        API -> Server: HTTP GET /api/v1/evaluations/{id}
+        activate Server
+        Server --> API: HTTP 200 OK\nEvaluationResponse
+        deactivate Server
+        
+        API --> SC: EvaluationResponse
+        deactivate API
+        
+        alt Status is COMPLETED
+            SC -> API: getEvaluationResults(evaluationId)
+            activate API
+            
+            API -> Server: HTTP GET /api/v1/evaluations/{id}/results
+            activate Server
+            Server --> API: HTTP 200 OK\nEvaluationResult
+            deactivate Server
+            
+            API --> SC: EvaluationResult
+            deactivate API
+            
+            SC -> SC: displayResults(result, format)
+            SC --> CLI: 0 (success)
+            
+        else Status is FAILED
+            SC -> SC: displayError(response)
+            SC --> CLI: 1 (error)
+            
+        else Status is PENDING
+            SC -> SC: sleep(pollInterval)
+        end
+    end
+    
+else No wait flag
+    SC -> SC: displaySubmissionConfirmation(response)
+    SC --> CLI: 0 (success)
+end
+
+deactivate SC
+CLI --> User: Exit code
+
+deactivate CLI
+
+@enduml

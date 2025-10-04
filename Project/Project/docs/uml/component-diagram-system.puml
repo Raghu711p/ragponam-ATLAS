@@ -1,0 +1,124 @@
+@startuml System Component Diagram
+!theme plain
+skinparam componentStyle rectangle
+
+package "External Interfaces" {
+    [REST API Clients] as RestClients
+    [CLI Application] as CLI
+    [Web Browser] as Browser
+}
+
+package "Presentation Layer" {
+    [EvaluationController] as EvalController
+    [StudentController] as StudentController
+    [GlobalExceptionHandler] as ExceptionHandler
+    [CLI Commands] as CLICommands
+}
+
+package "Security Layer" {
+    [InputValidator] as Validator
+    [SecureFileHandler] as FileHandler
+    [RateLimitingFilter] as RateLimit
+    [SecurityConfig] as SecurityConf
+}
+
+package "Service Layer" {
+    [EvaluationService] as EvalService
+    [AssignmentService] as AssignService
+    [ScoreCache] as Cache
+    [ErrorLogService] as ErrorLog
+}
+
+package "Engine Layer" {
+    [JavaCompiler] as Compiler
+    [JUnitTestRunner] as TestRunner
+}
+
+package "Repository Layer" {
+    [StudentRepository] as StudentRepo
+    [AssignmentRepository] as AssignRepo
+    [EvaluationRepository] as EvalRepo
+    [DynamoDBRepository] as DynamoRepo
+}
+
+package "Data Storage" {
+    database "MySQL Database" as MySQL {
+        [Students Table]
+        [Assignments Table]
+        [Evaluations Table]
+    }
+    
+    database "DynamoDB" as DynamoDB {
+        [Evaluation Logs Table]
+    }
+    
+    folder "File System" as FileSystem {
+        [Assignment Files]
+        [Test Files]
+        [Temporary Files]
+    }
+}
+
+package "Monitoring" {
+    [PerformanceMonitor] as PerfMonitor
+    [HealthIndicator] as Health
+    [Metrics Collector] as Metrics
+}
+
+' External connections
+RestClients --> EvalController : HTTP/REST
+CLI --> CLICommands : Command Line
+Browser --> EvalController : HTTP
+
+' Presentation layer connections
+EvalController --> Validator : validates input
+EvalController --> EvalService : delegates to
+StudentController --> EvalService : queries
+ExceptionHandler --> ErrorLog : logs errors
+
+CLICommands --> EvalController : HTTP calls
+
+' Security layer connections
+Validator --> FileHandler : secure storage
+RateLimit --> EvalController : filters requests
+SecurityConf --> RateLimit : configures
+
+' Service layer connections
+EvalService --> Compiler : compiles code
+EvalService --> TestRunner : runs tests
+EvalService --> Cache : caches scores
+EvalService --> ErrorLog : logs details
+
+AssignService --> FileHandler : stores files
+AssignService --> Validator : validates files
+
+ErrorLog --> DynamoRepo : stores logs
+Cache --> EvalRepo : fallback queries
+
+' Engine layer connections
+Compiler --> FileSystem : reads/writes files
+TestRunner --> FileSystem : reads test files
+
+' Repository layer connections
+StudentRepo --> MySQL : CRUD operations
+AssignRepo --> MySQL : CRUD operations
+EvalRepo --> MySQL : CRUD operations
+DynamoRepo --> DynamoDB : NoSQL operations
+
+EvalService --> StudentRepo : student data
+EvalService --> AssignRepo : assignment data
+EvalService --> EvalRepo : evaluation data
+
+AssignService --> AssignRepo : assignment CRUD
+
+' Monitoring connections
+PerfMonitor --> EvalService : monitors
+Health --> MySQL : checks health
+Health --> DynamoDB : checks health
+Health --> FileSystem : checks access
+Metrics --> PerfMonitor : collects metrics
+
+' File system connections
+FileHandler --> FileSystem : manages files
+
+@enduml
