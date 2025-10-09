@@ -1,5 +1,5 @@
 @echo off
-REM Student Evaluator System - Local Build Script for Windows
+REM E-Learning Platform with Auto Evaluation - Local Build Script for Windows
 REM This script builds the application locally without containerization
 
 echo ==========================================

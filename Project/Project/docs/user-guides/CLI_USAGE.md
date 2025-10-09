@@ -1,6 +1,6 @@
-# Student Evaluator System - CLI Usage Guide
+# E-Learning Platform with Auto Evaluation - CLI Usage Guide
 
-The Student Evaluator System provides a command-line interface (CLI) for interacting with the evaluation system. The CLI allows you to submit assignments, upload test files, trigger evaluations, and retrieve results.
+The E-Learning Platform with Auto Evaluation provides a command-line interface (CLI) for interacting with the educational platform. The CLI allows you to submit assignments, upload test files, trigger evaluations, and retrieve results.
 
 ## Prerequisites
 

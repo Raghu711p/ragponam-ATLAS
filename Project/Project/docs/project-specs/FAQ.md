@@ -1,10 +1,10 @@
-# Student Evaluator System - Frequently Asked Questions (FAQ)
+# E-Learning Platform with Auto Evaluation - Frequently Asked Questions (FAQ)
 
 ## General Questions
 
-### What is the Student Evaluator System?
+### What is the E-Learning Platform with Auto Evaluation?
 
-The Student Evaluator System is an automated platform for evaluating Java programming assignments through JUnit testing. It provides both REST API and CLI interfaces for uploading assignments, managing test cases, and retrieving evaluation results.
+The E-Learning Platform with Auto Evaluation is a comprehensive educational technology solution that automates programming assignment evaluation and provides interactive learning experiences. It offers both REST API and CLI interfaces for uploading assignments, managing test cases, and retrieving evaluation results.
 
 ### What programming languages does it support?
 

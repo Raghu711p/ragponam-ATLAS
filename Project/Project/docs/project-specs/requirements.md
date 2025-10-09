@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Student Evaluator System is a personal learning project designed to automate the evaluation of student Java programming assignments through JUnit testing. The system will provide a RESTful API with CLI interface, compile and test Java submissions, and store results in both MySQL (structured data) and DynamoDB (unstructured logs). This project serves as a comprehensive learning exercise covering Java development, testing frameworks, database integration, and DevOps practices.
+The E-Learning Platform with Auto Evaluation is a comprehensive educational technology project designed to provide automated programming assignment evaluation and interactive learning experiences. The system offers a RESTful API with CLI interface, compiles and tests programming submissions, and stores results in both MySQL (structured data) and DynamoDB (unstructured logs). This platform serves as a complete learning management solution covering educational technology, automated assessment, and modern software development practices.
 
 ## Requirements
 

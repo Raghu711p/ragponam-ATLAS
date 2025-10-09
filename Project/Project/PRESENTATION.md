@@ -1,5 +1,5 @@
-# Student Evaluator System
-## Automated Java Assignment Evaluation Platform
+# E-Learning Platform with Auto Evaluation
+## Comprehensive Educational Technology Solution
 
 **8-Minute Project Presentation**
 
@@ -7,9 +7,9 @@
 
 ## Slide 1: Project Overview (1 min)
 
-### What is the Student Evaluator System?
+### What is the E-Learning Platform with Auto Evaluation?
 
-🎯 **Mission**: Automate Java programming assignment evaluation through JUnit testing
+🎯 **Mission**: Comprehensive educational platform that automates programming assignment evaluation and provides interactive learning experiences
 
 ### Key Features
 - ✅ **Automated Compilation** - Compiles student Java code safely

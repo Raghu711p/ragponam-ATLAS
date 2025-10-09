@@ -1,6 +1,6 @@
-# Student Evaluator System
+# E-Learning Platform with Auto Evaluation
 
-A comprehensive Java assignment evaluation system that automates the compilation and testing of student submissions using JUnit tests.
+A comprehensive educational technology platform that provides automated programming assignment evaluation, interactive learning experiences, and real-time feedback for students and educators.
 
 ## Project Structure
 

@@ -1,4 +1,4 @@
-# Student Evaluator System - Design Document
+# E-Learning Platform with Auto Evaluation - Design Document
 
 ## Overview
 

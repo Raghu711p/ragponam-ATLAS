@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c047e706-a8a8-45c6-bc34-0132507ec123" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../src/Element.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Person.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task001.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task002.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task003.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task004.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task005.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task006.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task007.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task008.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task009.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task010.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task011.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task012.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task013.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task014.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task015.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task016_color.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task016_day.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task017.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task018.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task019.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task020.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task021.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task022.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task023.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task024.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task025.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task026.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task027.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task028.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task029.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task030.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task031.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task032.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task033.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task033_1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task034.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task035.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task036.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task037.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task038.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task039.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task040.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Task041.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Raghu711p"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Raghu711p/ragponam-ATLAS.git",
+    "accountId": "818c1f29-6631-4380-bbad-0641bfa399ef"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="33Xp9oWmLk6bH5jFjihu9TMjI6M" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.SimpleCartoonizer.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "JavaPractice",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c047e706-a8a8-45c6-bc34-0132507ec123" name="Changes" comment="" />
+      <created>1759473127303</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759473127303</updated>
+    </task>
+    <servers />
+  </component>
+</project>

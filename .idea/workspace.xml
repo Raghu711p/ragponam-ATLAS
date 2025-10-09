@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="634a534d-3771-45f9-9ce8-69b45fcf5838" name="Changes" comment="Merge remote-tracking branch 'origin/JavaPractice' into JavaPractice">
+      <change afterPath="$PROJECT_DIR$/src/Day5/Task008.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Day5/Task017.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Element.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task001.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task001.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task002.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task002.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task003.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task003.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task004.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task004.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task005.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task005.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task006.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task006.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task007.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task007.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task008.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task009.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task009.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task010.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task010.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task011.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task011.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task012.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task012.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task013.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task013.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task014.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task014.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task015.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task015.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task016_color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task016_color.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task016_day.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task016_day.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task017.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task018.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task018.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task019.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task019.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task020.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task020.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task021.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task021.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task022.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task022.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task023.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task023.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task024.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task024.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task025.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task025.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task026.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task026.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task027.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task027.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task028.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task028.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task029.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task029.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task030.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task030.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task031.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task031.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task032.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task032.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task033.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task033.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task033_1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task033_1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task034.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task034.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task035.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task035.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task036.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task036.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task037.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task037.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task038.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task038.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task039.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task039.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task040.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task040.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task041.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day5/Task041.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="module" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/JavaPractice" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="ragponam &lt;raghu711p@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="JavaPractice" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Raghu711p&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Raghu711p/ragponam-ATLAS.git&quot;,
+    &quot;accountId&quot;: &quot;818c1f29-6631-4380-bbad-0641bfa399ef&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2y7SPPrVzGkt4QcHahMQNCC3mXf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ClientAbstractFactory.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GFG.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Myclass.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RedBlackTree.executor&quot;: &quot;Run&quot;,
+    &quot;Application.School.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task001.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task002.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task003.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task004.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task005.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task006.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task007.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task008.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task009.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task010.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task011.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task012.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task013.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task014.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task015.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task016.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task016_1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task016_2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task016_color.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task016_day.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task017.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task018.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task019.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task02.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task020.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task021.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task023.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task024.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task025.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task026.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task027.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task029.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task03.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task030.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task031.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task032.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task033.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task033_1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task034.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task035.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task036.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task037.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task038.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task039.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task040.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task041.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task10.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Task2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;JavaPractice&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ragponam/AtlasJava/JavaAtlas&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/ragponam/AtlasJava/JavaAtlas/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ragponam\AtlasJava\JavaAtlas\src\Day5" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Task018">
+    <configuration name="Task018" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Task018" />
+      <module name="JavaAtlas" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Task020" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Task020" />
+      <module name="JavaAtlas" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Task033" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Task033" />
+      <module name="JavaAtlas" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Task018" />
+        <item itemvalue="Application.Task033" />
+        <item itemvalue="Application.Task020" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="634a534d-3771-45f9-9ce8-69b45fcf5838" name="Changes" comment="" />
+      <created>1749184096449</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749184096449</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Task010 commit">
+      <option name="closed" value="true" />
+      <created>1749193141018</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1749193141018</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Task010 commit">
+      <option name="closed" value="true" />
+      <created>1749193249072</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1749193249072</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Task010 commit">
+      <option name="closed" value="true" />
+      <created>1749193270434</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1749193270434</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Commiting java practice files 1-8">
+      <option name="closed" value="true" />
+      <created>1749194513688</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1749194513688</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Commiting java practice files 11">
+      <option name="closed" value="true" />
+      <created>1749196065452</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1749196065452</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Commiting java practice file 009">
+      <option name="closed" value="true" />
+      <created>1749200799384</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1749200799384</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Commiting java practice file 009">
+      <option name="closed" value="true" />
+      <created>1749214875852</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1749214875852</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Merge remote-tracking branch 'origin/JavaPractice' into JavaPractice">
+      <option name="closed" value="true" />
+      <created>1749215268793</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1749215268793</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Merge remote-tracking branch 'origin/JavaPractice' into JavaPractice">
+      <option name="closed" value="true" />
+      <created>1749304168746</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1749304168746</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Task010 commit" />
+    <MESSAGE value="Commiting java practice files 1-8" />
+    <MESSAGE value="Commiting java practice files 1-10" />
+    <MESSAGE value="Commiting java practice files 11" />
+    <MESSAGE value="Commiting java practice file 009" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/JavaPractice' into JavaPractice" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/JavaPractice' into JavaPractice" />
+  </component>
+</project>

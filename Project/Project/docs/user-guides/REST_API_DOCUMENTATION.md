@@ -1,8 +1,8 @@
-# Student Evaluator System - REST API User Guide
+# E-Learning Platform with Auto Evaluation - REST API User Guide
 
 ## Overview
 
-The Student Evaluator System provides a RESTful API for automated evaluation of Java programming assignments. This guide covers how to use the API endpoints to upload assignments, manage test cases, trigger evaluations, and retrieve results.
+The E-Learning Platform with Auto Evaluation provides a RESTful API for automated evaluation of programming assignments and comprehensive learning management. This guide covers how to use the API endpoints to upload assignments, manage test cases, trigger evaluations, and retrieve results.
 
 ## Base URL
 

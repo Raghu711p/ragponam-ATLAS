@@ -1,8 +1,8 @@
-# Student Evaluator System - Architecture Guide
+# E-Learning Platform with Auto Evaluation - Architecture Guide
 
 ## Overview
 
-The Student Evaluator System is designed as a modular, scalable application that automates the evaluation of Java programming assignments through JUnit testing. This guide provides detailed information about the system architecture, component interactions, and development practices.
+The E-Learning Platform with Auto Evaluation is designed as a modular, scalable educational technology solution that automates programming assignment evaluation and provides comprehensive learning management features. This guide provides detailed information about the system architecture, component interactions, and development practices.
 
 ## System Architecture
 

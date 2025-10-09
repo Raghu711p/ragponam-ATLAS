@@ -1,4 +1,4 @@
-@startuml Student Evaluator System - Class Overview
+@startuml E-Learning Platform with Auto Evaluation - Class Overview
 !theme plain
 skinparam classAttributeIconSize 0
 skinparam classFontSize 10

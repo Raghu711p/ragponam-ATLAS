@@ -1,6 +1,6 @@
-# Student Evaluator System - UML Diagrams
+# E-Learning Platform with Auto Evaluation - UML Diagrams
 
-This directory contains comprehensive UML diagrams for the Student Evaluator System using PlantUML syntax.
+This directory contains comprehensive UML diagrams for the E-Learning Platform with Auto Evaluation using PlantUML syntax.
 
 ## 📁 Diagram Files
 
